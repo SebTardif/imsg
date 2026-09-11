@@ -1,4 +1,6 @@
+import Commander
 import Foundation
+import IMsgCore
 import Testing
 
 @testable import imsg
@@ -12,8 +14,9 @@ func injectedHelperRefusesSymlinkGroupPhotoPaths() throws {
     .deletingLastPathComponent()
     .deletingLastPathComponent()
   let helper = repoRoot.appendingPathComponent("Sources/IMsgHelper/IMsgInjected.m")
-  let source = stripObjectiveCComments(try String(contentsOf: helper, encoding: .utf8))
-  let photoBody = try #require(functionBody(named: "handleUpdateGroupPhoto", in: source))
+  let source = try String(contentsOf: helper, encoding: .utf8)
+  let start = try #require(source.range(of: "handleUpdateGroupPhoto"))
+  let photoBody = String(source[start.lowerBound...])
 
   let clearPhoto = try #require(photoBody.range(of: "filePath.length == 0"))
   let symlinkCheck = try #require(photoBody.range(of: "pathHasSymlinkComponent(filePath)"))
