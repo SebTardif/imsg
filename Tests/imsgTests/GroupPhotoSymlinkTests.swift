@@ -18,7 +18,8 @@ func injectedHelperRefusesSymlinkGroupPhotoPaths() throws {
   let start = try #require(source.range(of: "static NSDictionary *handleUpdateGroupPhoto"))
   let searchFrom =
     source.index(start.lowerBound, offsetBy: 80, limitedBy: source.endIndex) ?? source.endIndex
-  let end = source.range(of: "\nstatic ", range: searchFrom..<source.endIndex)?.lowerBound
+  let end =
+    source.range(of: "\nstatic ", range: searchFrom..<source.endIndex)?.lowerBound
     ?? source.endIndex
   let photoBody = String(source[start.lowerBound..<end])
 
