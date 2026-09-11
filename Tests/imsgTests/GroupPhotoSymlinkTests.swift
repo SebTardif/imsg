@@ -24,7 +24,7 @@ func injectedHelperRefusesSymlinkGroupPhotoPaths() throws {
 
   let clearPhoto = try #require(photoBody.range(of: "filePath.length == 0"))
   let symlinkCheck = try #require(photoBody.range(of: "pathHasSymlinkComponent(filePath)"))
-  let prepare = try #require(photoBody.range(of: "prepareOutgoingTransfer"))
+  let prepare = try #require(photoBody.range(of: "prepareOutgoingTransfer("))
   #expect(clearPhoto.lowerBound < symlinkCheck.lowerBound)
   #expect(symlinkCheck.lowerBound < prepare.lowerBound)
   #expect(photoBody.contains("path traverses a symlink"))
